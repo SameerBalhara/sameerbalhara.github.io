@@ -40,6 +40,19 @@ iframe {
     padding: 28px;
     margin-bottom: 40px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.post:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.12);
+}
+
+.post-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .post-accent {
@@ -50,9 +63,61 @@ iframe {
     margin-bottom: 18px;
 }
 
+.post-preview {
+    position: relative;
+    margin-top: 12px;
+    color: rgba(0,0,0,0.8);
+    line-height: 1.7;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 5;   /* NUMBER OF LINES TO SHOW */
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+.post-circle {
+    width: clamp(16px, 2.5vw, 24px);
+    height: clamp(16px, 2.5vw, 24px);
+    background: #e37e6f;
+    border-radius: 50%;
+    position: absolute;
+    top: clamp(14px, 2vw, 20px);
+    right: clamp(14px, 2vw, 20px);
+}
+
+/* Fade effect */
+.post-preview::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+
+    background: linear-gradient(
+        rgba(235,229,216,0),
+        rgba(235,229,216,1)
+    );
+
+    pointer-events: none;
+}
+
+.readmore {
+    display: inline-block;
+    margin-top: 16px;
+    font-weight: bold;
+    color: #e37e6f;
+    text-decoration: none;
+}
+
+.readmore:hover {
+    text-decoration: underline;
+}
+
 
 h1 {
-    font-size: 42px;
+    font-size: 35px;
     margin-top: 0;
     margin-bottom: 30px;
 }
@@ -63,8 +128,37 @@ h2 {
 }
 
 p {
-    line-height: 1.6;
+    font-size: clamp(1rem, 1.5vw, 1.08rem);
+    line-height: 1.7;
 }
+
+.post.completed {
+    border: 1px solid rgba(127, 174, 155, 0.35);
+}
+
+.post.completed .post-circle {
+    background: #7FAE9B;
+}
+
+.post.completed h2 {
+    color: #527A6B;
+}
+
+.post.completed .readmore {
+    color: #5E8777;
+}
+
+.post.completed .post-preview::after {
+    background: linear-gradient(
+        rgba(235, 229, 216, 0),
+        rgba(226, 232, 223, 1)
+    );
+}
+
+.post.completed:hover {
+    box-shadow: 0 14px 32px rgba(94, 135, 119, 0.10);
+}
+
 </style>
 </head>
 
@@ -72,14 +166,40 @@ p {
 
 <div class="container">
 
-<h1>Sameer's Software Portfolio/Blog</h1>
+<h1>Sameer Balhara - Software Engineering Blog</h1>
 
-<div class="post">
-    <div class="post-accent"></div>
+<a class="post-link" href="post1.html">
+    <div class="post">
+        <div class="post-circle"></div>
 
-<a href="post1.html">See Devlog 0</a>
+        <h2>Devlog 0 - Procedural Terrain Generation</h2>
 
-</div>
+        <div class="post-preview">
+            Procedural terrain generation has been progressing well.
+            We implemented chunk-based streaming with LOD meshes and began working
+            on biome blending. River generation has gone through several iterations
+            — first using FBM contour tracing, then Voronoi centerlines.
+            Currently, we are exploring gradient-based carving to improve realism and
+            continuity across chunk borders...
+        </div>
+
+        <span class="readmore">Read full post →</span>
+    </div>
+</a>
+
+<a class="post-link" href="post2.html">
+    <div class="post completed">
+        <div class="post-circle"></div>
+
+        <h2>Computer Vision Based Information Overlay - The Finals</h2>
+
+        <div class="post-preview">
+            Using a mathematical problem design framework, we uncovered a lightweight, low-latency solution to answer one of the biggest questions in The Finals' (by Embark Studios) competitive mode. This program provides users with a calculated edge over other users without hooks, injections, or disallowed tools. After directly getting an EV certification + whitelist from security engineers at Embark Studios ($500 million ARR company), this program is officially the first third-party software tool to receive comprehensive integration into Embark's anti-cheat detection software. 
+        </div>
+
+        <span class="readmore">View Completed Project →</span>
+    </div>
+</a>
 
 </div>
 
