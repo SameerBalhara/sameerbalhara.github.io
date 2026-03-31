@@ -163,9 +163,37 @@ p {
 
     <p> Another issue with the chunk borders was the mesh normal calculations, which were inconsistent across borders due to the way mesh normals are calculated. As information on the mesh across the edges were not maintained, the normal calculations assumed the meshes continued in a perfect linear extrapolation, which was often not the case and made seams more visible (though there were not holes in the terrain, unlike with LOD switching). To combat this, we added padding on the mesh data's inputs on all sides, which effectively simulated sampling the neighboring chunks for additional mesh data information necessary to complete the normal calculations. Again this was at the cost of system performance, but was barely noticeable when benchmarking.</p>
 
-    <h2>Custom Shader</h2>
+    <h2>Custom Shader and Grass</h2>
 
-    <p> Not yet finished...</p>
+    <p> Shader code is a new area of exploration for us. Typically, we work with the default shaders under URP/Lit, but to apply particular patterns or potentially animate coloring, writing custom shader code is necessary. Thus far, the basic shader code has just been to change the coloring of the grass surface, applying dark and light patches simulated from a noise function across the landscape, as in the below image. </p>
+
+<div class="media">
+        <img src="images/UnityScenePreview1_009.png">
+    </div>
+
+    <p> This was mostly the extent of the custom shader code, with it mostly introduced to pave the pipeline for such customization going forward (remember our design goal of high modularity). </p>
+
+    <p> Grass was our next effort, and similar to the custom shader code, the primary goals were to experiment with custom asset creation and adjust the pipeline for future grass implementation. First, we painted a grass PNG using <b>Krita</b> (akin to GIMP), and then applied the image on both sides of two intersecting perfectly perpendicular quads. We rendered the mesh as transparent, and the grass was viewable in the scene. Next, we began writing logic on grass generation, which was deterministically set in a grid-cell pattern for the sake of experimentation. After instantiating the grass prefab in each cell, we saw why many games struggle with grass rendering. </p>
+
+<div class="media">
+        <img src="images/UnityScenePreview_010.png">
+    </div>
+
+    <p> Visual appearance aside, the grass tanked system performance to 2.5 FPS, a completely unacceptable result, with nearly 1 million batches. We expected such statistics though, as nearly none of the processes had been optimized yet. For example, GPU instancing (a method to avoid draw calls to the CPU of the frequency: number of grass instances) could solve much of this performance issue. Additionally, the grass prefab itself had two separate quads rather than one merged object, which resulted in 2x the number of draw calls. There furthermore was no LOD or density changes based on distance. These are all next steps in this pipeline. We also have many expectations on the art style, gameobject prefab, coloring, etc, that we can fine tune over these next weeks. But getting the system integration in place and introducing a foliage manager and grass data structure helped pave the way for these future changes. </p>
+
+    <h2>Future Goals/Needed Changes</h2>
+
+    <p> It's difficult to name exactly what will occur on a week-to-week basis, hence the name future goals and not next week's goals. As we work on the project, we find bugs, areas of improvement, and other tweaks we want to introduce to development before the game's release. Some of these are more urgent than others, and some of these will not be useful to complete at this time as they are subject to change. For example, a goal of wanting to change terrain generation to produce more mountains for example, could be futile as more biomes are added later and the number of mountains needs to be reduced later. While these stem from parameter tweaks fundamentally, the parameter tweaks become obsolete quickly with future development. So do not expect anything as is to stay the same way - but you can rest assured it will only improve from there. </p>
+
+    <p> To get into the actual changes planned, here is some idea of what we aim to accomplish. </p>
+
+<p> For grass, introduce more intersecting planes to allow for grass viewing from multiple angles besides perfectly sideways, and randomize rotation of grass prefabs in the scene to amplify this effect. Also for grass, the grass art style currently looks too "hand-drawn" and must be redone, along with proper PBR maps introduced to observe the lighting. Additionally, more grass clump prefabs must be created using the same texture to minimize draw calls, leveraging UV mapping instead to raise foliage diversity. Further LOD changes must be made for grass specifically, and the custom shader must be able to render the terrain texture itself to look like grass on SurfaceType.Grass where grass instances won't be spawned (if the chunk is too far from the player). Grass must be GPU-instanced, and all quads must be merged into one object before importing into Unity to minimize draw calls (all using one texture though). We will try to carve the functionality via scripting mostly for these changes. However, we cannot guarantee the final grass version will be constructed when these changes are made, as the height, color scheme, texturing of the grass is subject to change depending on other foliage and potentially structures. With a building system in place eventually as well, the grass must be ready to not render over these areas. </p>
+
+<p> For the terrain's water bodies, currently rivers are identically drawn for each world seed, as the rivers are not a function of the world seed. This is an easy fix. Also, we will do the same for grass, so it is deterministic across clients for the same world yet still randomly generated in cells. For lakes and rivers, there were LOD stitching issues that were introduced in this week's update. Since the underlying terrain mesh was more detailed along the chunk borders/seams, the lake and river meshes looked out of place and saw clipping and strange geometry overall. Lake meshes are fully resolved. A similar change must be made to river meshes in the future, which is a simple fix. For river meshes, the plan is to maintain a heightmap without river carving and with it. The terrain itself will see a carving, but the river mesh will be placed as if no surface has been carved down. This will effectively create the volume between the river surface and river bed, to give players an area to move around in, as currently rivers are completely zero depth. Also, lake generation is currently exclusively in height-depressions, which is reasonable but can get repetitive. This will be changed eventually. </p>
+
+<p> For the terrain itself, we want to explore adjusting the spatial frequency of sample coordinates to create more gentle rolling hills. Also, mountains are quite narrow in their coverage, and more connected, longer continuous regions must be formed. The mountain height is also relatively undersized, as the average mountain height in real-life is close to 300 meters, and the mesh height multiplier is only 200, for a maximum height of 200 meters then. This is an easy fix, but will require more compression of the base land as we don't want that to increase by 1.5x in slope extremity. More biomes must be introduced. </p>
+
+<p> Remember, some of these changes are more pressing than others, but these fixes are all documented so we won't forget them! </p>
 
     <p> Thanks for reading until this point! We will be sure to post as often as we can (typically weekly around the same time). Please make sure to check out <a href="https://vincentliu1417.github.io/cv/">Vincent Liu</a> (co-developer of this game) for some more really cool projects! </p>
 
