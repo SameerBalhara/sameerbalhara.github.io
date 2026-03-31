@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sameer's Software Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial;
+    background: #ebe5d8;
+    color: black;
+    margin: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: clamp(20px, 4vw, 40px);
+}
+
+.media {
+    padding: 0 clamp(12px, 5vw, 60px);
+    margin-top: 20px;
+}
+
+img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+video {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+    height: clamp(220px, 45vw, 400px);
+    border: none;
+    border-radius: 12px;
+}
+
+.post {
+    position: relative;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(227, 126, 111, 0.35);
+    border-radius: 16px;
+    padding: clamp(18px, 3vw, 28px);
+    margin-bottom: 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.post-accent {
+    width: clamp(16px, 2.5vw, 24px);
+    height: clamp(16px, 2.5vw, 24px);
+    background: #e37e6f;
+    border-radius: 50%;
+    position: absolute;
+    top: clamp(14px, 2vw, 20px);
+    right: clamp(14px, 2vw, 20px);
+}
+
+.post-meta {
+    position: absolute;
+    top: clamp(14px, 2vw, 20px);
+    left: clamp(18px, 2.5vw, 24px);
+
+    font-size: clamp(0.75rem, 1.2vw, 0.85rem);
+    color: rgba(0,0,0,0.6);
+    letter-spacing: 0.03em;
+}
+
+h1 {
+    font-size: clamp(2rem, 4vw, 42px);
+    color: #e37e6f;
+    margin-top: 0px;
+    margin-bottom: 35px;
+    line-height: 1.15;
+}
+
+h2 {
+    font-size: clamp(1.2rem, 2.4vw, 25px);
+    margin-top: 20px;
+    color: #000000;
+    text-decoration: underline;
+    text-underline-offset: 7px;
+    line-height: 1.25;
+}
+
+p {
+    font-size: clamp(1rem, 1.5vw, 1.08rem);
+    line-height: 1.7;
+}
+
+.red-button {
+    display: inline-block;
+    background: #e37e6f;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 20px;
+    transition: 0.2s ease;
+}
+
+.red-button:hover {
+    background: #cf6a5b;
+}
+
+.button-center {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Devlog 1 - Terrain Visuals Improvements</h1>
+
+<div class="post">
+
+    <div class="post-meta">
+        Posted: Monday, March 30, 2026
+    </div>
+
+    <div class="post-accent"></div>
+
+    <h2>Opening Remarks</h2>
+
+    <p>As promised, here's the second week's devlog for <b>First Settlers</b>. A high level summary of this week's progress is as follows: mesh generation blockiness was improved (meaning reduced) dramatically. LOD has improved tremendously. Seams across chunks are now minimally noticable. Visuals have improved with a custom shader, and grass rendering is underway (though in its infancy thus far). </p> 
+
+    <p>If you are interested in the specifics along with accompanying graphics, keep reading!</p>
+
+
+    <h2>Height Map Design</h2>
+
+    <p> When procedurally generating terrain, a mesh must be generated for each chunk and the surface must be carved into the desired terrain surface shape. For land, including the base grass/ground, mountains, and any other solid footing spaces, the mesh directly follows a height map which is defined as a function of world seed. This height map is a function of several variables, including the mountain mask, river mask, and other independent noise-based scalar values. </p>
+ 
+    <p> In formulating the height map, octave offsets must be generated to shift the 2-D noise space for each fractal layer sampled. Originally, as part of a tutorial by <b>Sebastian Lague</b>, the octave offset values were randomly sampled between -100,000 and 100,000. We had arbitrarily used the same values, but we also modified the mesh height multiplier, which exacerbated discontinuities in the terrain unseen in the tutorial series. With a mesh height multiplier of 200, there was evident piecewise terracing shapes on all slopes, which gave the world a voxel-like look, especially evident in terrain features like rivers, as seen below. </p>
+
+<div class="media">
+        <img src="images/UnityScenePreview1_008.png">
+    </div>
+
+    <p> The terracing/blocky look is visible on the rock surface in the picture above. We initially thought the problem lied in the noise function itself, and the fact that over discrete integer samples, the linear interpolation between points gave it such a look. However, upon closer inspection, we noticed the terracing actually reduced in height and then increased, between two points that were increasing in height, which indicated the linear interpolation itself was not the issue. When we dove into the code, we found huge floating point imprecisions due to scaling down our octave samples over such a large selection, driven by the -100,000 to 100,000 sample range. After fixing this to (-1000, 1000), the surface instantly became smoother everywhere, like in the image below. </p>
+
+<div class="media">
+        <img src="images/UnityScenePreview3_008.png">
+    </div>
+
+    <h2>LOD Stitching and Mesh Normals</h2>
+
+    <p> With an LOD (level of detail) system in place, the mesh surface had visible seams across chunks of different LODs. This is inherently a problem associated with LOD switching, as fewer vertex counts across two adjacent chunks will result in holes between the "infinitely thin" mesh surfaces. To combat this, various techniques are used to implement LOD stitching, including matching the resolution at only the chunk borders to ensure a seamless connection (the technique we ultimately used). </p>
+
+    <p> One might expect such an approach would result in gaps visible between the high resolution chunk borders and the lower resolution chunk centers. However, by adjusting the vertices of the higher resolution (lower LOD) mesh edge to match the heights of the lower resolution (high LOD) mesh center edge, such seams disappear. Furthermore, given the distance these LOD changes occur at, the transitions between the chunk center and chunk border edges is barely noticable. The main downside of this approach is primarily a computational hit, but this impact was minimal when measured by system performance in the editor.</p>
+
+    <p> Another issue with the chunk borders was the mesh normal calculations, which were inconsistent across borders due to the way mesh normals are calculated. As information on the mesh across the edges were not maintained, the normal calculations assumed the meshes continued in a perfect linear extrapolation, which was often not the case and made seams more visible (though there were not holes in the terrain, unlike with LOD switching). To combat this, we added padding on the mesh data's inputs on all sides, which effectively simulated sampling the neighboring chunks for additional mesh data information necessary to complete the normal calculations. Again this was at the cost of system performance, but was barely noticeable when benchmarking.</p>
+
+    <h2>Custom Shader</h2>
+
+    <p> Not yet finished...</p>
+
+    <p> Thanks for reading until this point! We will be sure to post as often as we can (typically weekly around the same time). Please make sure to check out <a href="https://vincentliu1417.github.io/cv/">Vincent Liu</a> (co-developer of this game) for some more really cool projects! </p>
+
+    <div class="button-center">
+        <a href="index.html" class="red-button">← Return to Home</a>
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>
