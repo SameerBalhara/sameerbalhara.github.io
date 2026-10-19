@@ -1,0 +1,243 @@
+{
+  "FirstSettlers_Progress_Lakeside.png": {
+    "width": 3312,
+    "height": 1830,
+    "variants": [
+      {
+        "width": 480,
+        "height": 265,
+        "src": "images/optimized/FirstSettlers_Progress_Lakeside-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 530,
+        "src": "images/optimized/FirstSettlers_Progress_Lakeside-960.webp"
+      },
+      {
+        "width": 1600,
+        "height": 884,
+        "src": "images/optimized/FirstSettlers_Progress_Lakeside-1600.webp"
+      }
+    ]
+  },
+  "FirstSettlers_Progress_Settlement.png": {
+    "width": 3310,
+    "height": 1840,
+    "variants": [
+      {
+        "width": 480,
+        "height": 267,
+        "src": "images/optimized/FirstSettlers_Progress_Settlement-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 534,
+        "src": "images/optimized/FirstSettlers_Progress_Settlement-960.webp"
+      },
+      {
+        "width": 1600,
+        "height": 889,
+        "src": "images/optimized/FirstSettlers_Progress_Settlement-1600.webp"
+      }
+    ]
+  },
+  "UnityScenePreview1_008.png": {
+    "width": 1280,
+    "height": 720,
+    "variants": [
+      {
+        "width": 480,
+        "height": 270,
+        "src": "images/optimized/UnityScenePreview1_008-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 540,
+        "src": "images/optimized/UnityScenePreview1_008-960.webp"
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "src": "images/optimized/UnityScenePreview1_008-1280.webp"
+      }
+    ]
+  },
+  "UnityScenePreview1_009.png": {
+    "width": 1280,
+    "height": 1372,
+    "variants": [
+      {
+        "width": 480,
+        "height": 514,
+        "src": "images/optimized/UnityScenePreview1_009-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 1029,
+        "src": "images/optimized/UnityScenePreview1_009-960.webp"
+      },
+      {
+        "width": 1280,
+        "height": 1372,
+        "src": "images/optimized/UnityScenePreview1_009-1280.webp"
+      }
+    ]
+  },
+  "UnityScenePreview2_007.png": {
+    "width": 1280,
+    "height": 727,
+    "variants": [
+      {
+        "width": 480,
+        "height": 273,
+        "src": "images/optimized/UnityScenePreview2_007-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 545,
+        "src": "images/optimized/UnityScenePreview2_007-960.webp"
+      },
+      {
+        "width": 1280,
+        "height": 727,
+        "src": "images/optimized/UnityScenePreview2_007-1280.webp"
+      }
+    ]
+  },
+  "UnityScenePreview2_008.png": {
+    "width": 1280,
+    "height": 720,
+    "variants": [
+      {
+        "width": 480,
+        "height": 270,
+        "src": "images/optimized/UnityScenePreview2_008-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 540,
+        "src": "images/optimized/UnityScenePreview2_008-960.webp"
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "src": "images/optimized/UnityScenePreview2_008-1280.webp"
+      }
+    ]
+  },
+  "UnityScenePreview3_008.png": {
+    "width": 1280,
+    "height": 717,
+    "variants": [
+      {
+        "width": 480,
+        "height": 269,
+        "src": "images/optimized/UnityScenePreview3_008-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 538,
+        "src": "images/optimized/UnityScenePreview3_008-960.webp"
+      },
+      {
+        "width": 1280,
+        "height": 717,
+        "src": "images/optimized/UnityScenePreview3_008-1280.webp"
+      }
+    ]
+  },
+  "UnityScenePreview_004CompressedForGit.png": {
+    "width": 1280,
+    "height": 720,
+    "variants": [
+      {
+        "width": 480,
+        "height": 270,
+        "src": "images/optimized/UnityScenePreview_004CompressedForGit-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 540,
+        "src": "images/optimized/UnityScenePreview_004CompressedForGit-960.webp"
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "src": "images/optimized/UnityScenePreview_004CompressedForGit-1280.webp"
+      }
+    ]
+  },
+  "UnityScenePreview_006.png": {
+    "width": 1023,
+    "height": 838,
+    "variants": [
+      {
+        "width": 480,
+        "height": 393,
+        "src": "images/optimized/UnityScenePreview_006-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 786,
+        "src": "images/optimized/UnityScenePreview_006-960.webp"
+      },
+      {
+        "width": 1023,
+        "height": 838,
+        "src": "images/optimized/UnityScenePreview_006-1023.webp"
+      }
+    ]
+  },
+  "UnityScenePreview_007CompressedForGit.png": {
+    "width": 1280,
+    "height": 720,
+    "variants": [
+      {
+        "width": 480,
+        "height": 270,
+        "src": "images/optimized/UnityScenePreview_007CompressedForGit-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 540,
+        "src": "images/optimized/UnityScenePreview_007CompressedForGit-960.webp"
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "src": "images/optimized/UnityScenePreview_007CompressedForGit-1280.webp"
+      }
+    ]
+  },
+  "UnityScenePreview_010.png": {
+    "width": 1102,
+    "height": 1441,
+    "variants": [
+      {
+        "width": 480,
+        "height": 628,
+        "src": "images/optimized/UnityScenePreview_010-480.webp"
+      },
+      {
+        "width": 960,
+        "height": 1255,
+        "src": "images/optimized/UnityScenePreview_010-960.webp"
+      },
+      {
+        "width": 1102,
+        "height": 1441,
+        "src": "images/optimized/UnityScenePreview_010-1102.webp"
+      }
+    ]
+  },
+  "report": {
+    "width": 1000,
+    "height": 1294,
+    "src": "images/optimized/deepracer-report.webp"
+  },
+  "evidence": {
+    "width": 1522,
+    "height": 1308,
+    "src": "images/optimized/layerprocgen-pr.webp"
+  }
+}

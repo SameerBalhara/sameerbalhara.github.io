@@ -1,0 +1,15 @@
+<h2>The problem</h2>
+<p>LayerProcGen is a procedural generation framework. Its <code>MainThreadActionQueue</code> processes queued operations within a per-frame time budget. I identified an exception-handling path in which a queued operation could throw before the queue's stopwatch was reset.</p>
+<p>When cleanup was skipped, elapsed time between frames could count against the following frame's processing budget. The important distinction was between time spent processing queued work and time passing outside that processing window.</p>
+<h2>The proposed fix</h2>
+<p>I submitted <a href="https://github.com/runevision/LayerProcGen/pull/22">PR #22, “Reset main-thread queue timer when processing throws”</a>. The change moved stopwatch cleanup into a <code>finally</code> block so that it would run after successful processing and after an exception, while preserving exception propagation.</p>
+<p>This keeps the exception visible to the caller while making the timer's cleanup independent of how processing exits.</p>
+<h2>Regression testing</h2>
+<p>The PR included regression tests verifying that the stopwatch was stopped and reset after successful processing and after an exception. I ran the <code>MainThreadActionQueueTests</code> fixture in Unity Edit Mode; all five test cases passed, as recorded in the PR.</p>
+<p>OpenAI Codex assisted with drafting the regression tests.</p>
+<h2>Outcome: fix adopted upstream</h2>
+<p>On October 18, 2026, maintainer <code>runevision</code> confirmed that he had adopted the suggested <code>try … finally</code> approach in <code>MainThreadActionQueue</code>. The upstream change is part of <a href="https://github.com/runevision/LayerProcGen/commit/7fb6100ddcffa79ff993d4abbfb61602501cfcc8">commit <code>7fb6100</code>, version 0.5.0</a>.</p>
+<blockquote><p>“I've addressed the issue in the latest version by adopting the suggested try ... finally block”</p><cite>Maintainer response on PR #22</cite></blockquote>
+<p>The maintainer closed the PR without merging it. I record this contribution as <strong>fix adopted upstream</strong>: the reported issue and suggested fix informed the upstream implementation. The maintainer's response does not establish that the submitted regression tests were incorporated.</p>
+<h2>Contribution record</h2>
+<dl class="record"><dt>Repository</dt><dd><a href="https://github.com/runevision/LayerProcGen">runevision/LayerProcGen</a></dd><dt>Pull request</dt><dd><a href="https://github.com/runevision/LayerProcGen/pull/22">#22 · Closed without merge</a></dd><dt>Submitted</dt><dd>October 17, 2026</dd><dt>Adopted</dt><dd>October 18, 2026</dd><dt>Upstream release</dt><dd>Version 0.5.0 · <a href="https://github.com/runevision/LayerProcGen/commit/7fb6100ddcffa79ff993d4abbfb61602501cfcc8">7fb6100</a></dd></dl>

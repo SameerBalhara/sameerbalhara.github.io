@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700">
+ <rect width="1000" height="700" fill="#142936"/>
+ <g transform="translate(40 90) rotate(-7 460 240)">
+  <rect width="950" height="530" rx="9" fill="#17232f" stroke="#557a8d"/>
+  <path d="M0 8Q0 0 9 0H941Q950 0 950 9V52H0Z" fill="#243f52"/>
+  <g fill="#76aaaf"><circle cx="24" cy="26" r="5"/><circle cx="43" cy="26" r="5"/><circle cx="62" cy="26" r="5"/></g>
+  <g font-family="monospace" font-size="23" fill="#c8d6de">
+   <text x="93" y="34" font-size="15">MainThreadActionQueue.cs</text>
+   <text x="35" y="110" fill="#8aabab">// Cleanup, even when queued work throws.</text>
+   <text x="35" y="159" fill="#83c5ff">try</text><text x="35" y="200">{</text>
+   <text x="65" y="242">ProcessQueuedActions();</text><text x="35" y="282">}</text>
+   <rect x="15" y="303" width="920" height="173" fill="#204d3e"/>
+   <text x="35" y="341" fill="#a5e5ba">finally</text><text x="35" y="382" fill="#a5e5ba">{</text>
+   <text x="65" y="423" fill="#a5e5ba">stopwatch.Reset();</text><text x="35" y="464" fill="#a5e5ba">}</text>
+  </g>
+ </g>
+</svg>
